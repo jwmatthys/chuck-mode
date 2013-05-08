@@ -56,7 +56,7 @@
 ;;; Customizable variables
 
 (defgroup chuck nil
-  "Support for the Python programming language, <http://www.python.org/>"
+  "Support for the ChucK programming language, <http://chuck.cs.princeton.edu/>"
   :group 'languages
   :prefix "chuck-")
 
@@ -247,7 +247,7 @@ upchuck operator."
 	  ;; standard ChucK unit generators: 
 	  "SinOsc" "PulseOsc" "SqrOsc" "TriOsc"
 	  "SawOsc" "Phasor" "Noise" "Impulse"
-	  "Step" "Gain" "SndBuf" "HalfRect"
+	  "Step" "Gain" "SndBuf" "SndBuf2" "HalfRect"
 	  "FullRect" "ZeroX" "Mix2" "Pan2"
 	  "GenX" "CurveTable" "WarpTable" "LiSa" 
 	  ;; filters:
@@ -259,7 +259,7 @@ upchuck operator."
 	  "Echo" "JCRev" "NRev" "PRCRev" "Chorus"
 	  "Modulate" "PitShift" "SubNoise" "Blit"
 	  "BlitSaw" "BlitSquare" "WvIn" "WaveLoop"
-	  "WvOut" 
+	  "WvOut" "WvOut2"
 	  ;; STK instruments unit generators
 	  "StkInstrument" "BandedWG" "BlowBotl"
 	  "BlowHole" "Bowed" "Brass" "Clarinet"
@@ -267,7 +267,14 @@ upchuck operator."
 	  "Saxofony" "Shakers" "Sitar" "StifKarp"
 	  "VoicForm" "FM" "BeeThree" "FMVoices"
 	  "HevyMetl" "PercFlut" "Rhodey"
-	  "TubeBell" "Wurley") 
+	  "TubeBell" "Wurley"
+	  ;; Events and IO
+	  "Event" "Object" "MidiIn" "MidiMsg"
+	  "OscRecv" "OscSend" "OscEvent"
+	  "FileIO" "IO" "Shred"
+	  "Hid" "HidMsg" "KBHit"
+	  "StringTokenizer" "ConsoleInput"
+	  )
 	 'font-lock-type-face) 
    (cons (keyword-regexp
 	  ;; Control structures
@@ -308,8 +315,9 @@ upchuck operator."
    ;; Standard Library functions
    (list (chuck-library-regexp "Std"
 			       ;; Std
-			       "abs" "fabs" "rand"
-			       "rand2" "randf" "rand2f"
+			       "abs" "fabs"
+			       ;; update for 1.3.1.3: deprecate Std.rand
+			       ;;"rand" "rand2" "randf" "rand2f"
 			       "sgn" "system" "atoi"
 			       "atof" "getenv" "setenv"
 			       "mtof" "ftom" "powtodb"
@@ -322,8 +330,19 @@ upchuck operator."
 			       "replace" "status" "crash")
 	 1 'font-lock-builtin-face)
    
+   (list (chuck-library-regexp "me"
+			       ;; me
+			       "arg" "args" "yield"
+			       "exit" "sourcePath" "sourceDir")
+	 1 'font-lock-builtin-face)
+   
    (list (chuck-library-regexp "Math"
 			       ;; Math
+			       "random" "random2" "randomf" "random2f"
+			       "srandom" "RANDOM_MAX"
+			       "PI" "TWO_PI" "e" "E" "i" "I" "j" "J"
+			       "INFINITY" "INT_MAX" "FLOAT_MAX"
+			       "FLOAT_MIN_MAG"
 			       "sin" "cos" "tan" "asin"
 			       "acos" "atan" "atan2"
 			       "sinh" "cosh" "tanh"
